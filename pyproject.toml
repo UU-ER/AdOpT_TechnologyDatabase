@@ -1,0 +1,51 @@
+[tool.poetry]
+name = "adopt_net0"
+version = "0.0.0"  # Version is static, but you can use dynamic versioning if needed
+description = "A python package for multi energy system modelling"
+authors = [
+  "Jan F. Wiegner <j.f.wiegner@uu.nl>",
+  "Julia L. Tiggeloven <j.l.tiggeloven@uu.nl>",
+  "Luca Bertoni <l.bertoni@uu.nl>",
+  "Inge Ossentjuk <i.m.ossentjuk@uu.nl>",
+  "Matteo Gazzani <m.gazzani@uu.nl>"
+]
+readme = "README.md"
+license = "MIT"
+homepage = "https://github.com/UU-ER/AdOpT-NET0"
+repository = "https://github.com/UU-ER/AdOpT-NET0"
+documentation = "https://adopt-net0.readthedocs.io"
+
+[tool.poetry-dynamic-versioning]
+enable = true
+
+[tool.poetry-dynamic-versioning.from-file]
+source = "version.py"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pandas = ">=2.2.2"
+
+[tool.poetry.group.test.dependencies]
+pytest = ">=8.1.1"
+pytest-cov = ">= 6.0.0"
+nbformat = ">= 5.10.4"
+nbconvert = ">= 5.4.0"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = ">=3.7.0"
+black = ">=24.4.0"
+sphinx = ">=7.3.7"
+sphinx_rtd_theme = ">=2.0.0"
+tables = ">=3.9.2"
+
+[tool.poetry.urls]
+homepage = "https://github.com/UU-ER/AdOpT-NET0"
+issues = "https://github.com/UU-ER/AdOpT-NET0/issues"
+documentation = "https://adopt-net0.readthedocs.io"
+
+[tool.pytest.ini_options]
+addopts = "--import-mode=importlib"
+
+[build-system]
+requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
+build-backend = "poetry_dynamic_versioning.backend"
