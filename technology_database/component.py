@@ -20,11 +20,12 @@ class Component:
         self.opex_fix = None
         self.opex_var = None
 
-    def _convert_currency(self):
+    def _convert_currency(self, value):
         """
-        Convert unit_capex and opex_var to specified currency for given financial_year_in and currency_in
+        Convert value to specified currency for given financial_year_in and currency_in
 
         Uses the average exchange rates for a year as given by the European Central Bank
+        :param float value: value to convert
         :return:
         """
         rates_path = Path(__file__).parent / Path(
@@ -38,17 +39,17 @@ class Component:
         # Convert to EUR
         if self.currency_in != "EUR":
             rate_eur = rates_year_in[self.currency_in]
-            self.unit_capex = self.unit_capex / rate_eur
-            self.opex_var = self.opex_var / rate_eur
+            value = value / rate_eur
 
-        self._correct_inflation()
+        value = self._correct_inflation(value)
 
         if self.currency_out != "EUR":
             rate_other = rates_year_out[self.currency_out]
-            self.unit_capex = self.unit_capex * rate_other
-            self.opex_var = self.opex_var * rate_other
+            value = value * rate_other
 
-    def _correct_inflation(self):
+        return value
+
+    def _correct_inflation(self, value):
 
         ppi_path = Path(__file__).parent / Path(
             "./data_currency_conversion/producer_price_index_euro.csv"
@@ -60,8 +61,7 @@ class Component:
             "OBS_VALUE"
         ].mean()
 
-        self.unit_capex = self.unit_capex * ppi_year_out / ppi_year_in
-        self.opex_var = self.opex_var * ppi_year_out / ppi_year_in
+        return value * ppi_year_out / ppi_year_in
 
     def calculate_levelized_cost(self, capacity_factor):
         pass

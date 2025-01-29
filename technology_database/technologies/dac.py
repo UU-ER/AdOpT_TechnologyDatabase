@@ -117,7 +117,14 @@ class Dac_sievert(Component):
         self._calculate_opex_var(cumulative_capacity)
         self._calculate_opex_fix(cumulative_capacity)
 
-        self._convert_currency()
+        self.unit_capex = self._convert_currency(self.unit_capex)
+        self.opex_var = self._convert_currency(self.opex_var)
+
+        return {
+            "unit_capex": self.unit_capex,
+            "opex_fix": self.opex_fix,
+            "opex_var": self.opex_var,
+        }
 
     def _calculate_capex(self, cumulative_capacity):
         """
